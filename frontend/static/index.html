@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AirValue — Login / Signup</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>AirValue</h1>
+
+    <div class="card two-col">
+      <div>
+        <h2>Login</h2>
+        <input id="login_email" type="email" placeholder="Email" />
+        <input id="login_password" type="password" placeholder="Password" />
+        <div class="row">
+          <button id="loginBtn">Login</button>
+          <button id="toSignupBtn" class="link">Sign up</button>
+        </div>
+        <div id="loginMsg" class="muted"></div>
+      </div>
+
+      <div>
+        <h2>Sign up</h2>
+        <input id="signup_email" type="email" placeholder="Email" />
+        <input id="signup_password" type="password" placeholder="Password (6-72 chars)" />
+        <div class="row">
+          <button id="signupBtn">Create Account</button>
+          <button id="toLoginBtn" class="link">Back to Login</button>
+        </div>
+        <div id="signupMsg" class="muted"></div>
+      </div>
+    </div>
+
+    <footer class="muted small">Local demo — backend must be running at <code>http://127.0.0.1:8000</code></footer>
+  </div>
+</body>
+</html>

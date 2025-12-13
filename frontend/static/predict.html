@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AirValue — Predict</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="row space-between">
+      <h1>Predict Price</h1>
+      <div><a href="/dashboard.html"><button>Back</button></a></div>
+    </header>
+
+    <section class="card">
+      <label for="title">Title (optional)</label>
+      <input id="title" placeholder="Cozy studio near metro" />
+
+      <label for="bedrooms">Bedrooms</label>
+      <input id="bedrooms" type="number" value="1" />
+
+      <label for="bathrooms">Bathrooms</label>
+      <input id="bathrooms" type="number" value="1" />
+
+      <label for="area">Area (sqft)</label>
+      <input id="area" type="number" value="350" />
+
+      <label for="zipcode">Zipcode</label>
+      <input id="zipcode" value="10001" />
+
+      <div class="row">
+        <label><input id="wifi" type="checkbox" checked /> WiFi</label>
+        <label><input id="ac" type="checkbox" checked /> AC</label>
+        <label><input id="entire" type="checkbox" checked /> Entire place</label>
+      </div>
+
+      <div class="row mt-8">
+        <button id="predictBtn">Predict</button>
+        <button id="saveBtn">Predict & Save</button>
+      </div>
+
+      <div id="predictResult" class="card muted mt-8"></div>
+    </section>
+  </div>
+</body>
+</html>

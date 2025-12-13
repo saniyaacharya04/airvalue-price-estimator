@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+
+# ML artifacts
+backend/airvalue_rf_model.joblib
+backend/airvalue.db

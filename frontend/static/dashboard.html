@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AirValue — Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="row space-between">
+      <h1>AirValue</h1>
+      <div>
+        <span id="accountStatus" class="muted"></span>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <nav class="nav row">
+      <a href="/predict.html"><button>Predict Price</button></a>
+      <a href="/history.html"><button>History</button></a>
+      <a href="/bulk.html"><button class="premium">Bulk Predictions</button></a>
+      <a href="/analytics.html"><button class="premium">Analytics</button></a>
+      <a href="/premium.html"><button>Upgrade</button></a>
+    </nav>
+
+    <section id="recent" class="card">
+      <h3>Recent Predictions</h3>
+      <ul id="recentList" class="list muted">
+        <li class="muted">Loading...</li>
+      </ul>
+    </section>
+
+    <footer class="muted small">Demo local UI</footer>
+  </div>
+</body>
+</html>
