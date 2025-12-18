@@ -8,7 +8,6 @@ from app.core.auth_dependency import get_current_user
 
 router = APIRouter(prefix="/predict", tags=["prediction"])
 
-
 @router.post("", response_model=PredictionResponse)
 def predict(
     request: PredictionRequest,
@@ -21,7 +20,7 @@ def predict(
         features=request.features,
     )
 
-    return {
-        "predicted_price": prediction.predicted_price,
-        "explanation": None,
-    }
+    return PredictionResponse(
+        predicted_price=prediction.predicted_price,
+        explanation=None,
+    )

@@ -1,39 +1,61 @@
-.PHONY: env install train run clean
+# ================================
+# AirValue — Makefile
+# ================================
 
-# --------------------------------------------------
-# Environment
-# --------------------------------------------------
+PYTHON=python
+PIP=pip
+BACKEND_DIR=backend
+APP_MODULE=app.main:app
+ENV_FILE=.env
 
-env:
-	@echo "Activate conda environment first:"
-	@echo "conda activate airvalue-py310"
-
-# --------------------------------------------------
-# Install dependencies
-# --------------------------------------------------
+# -------------------------------
+# Setup & Dependencies
+# -------------------------------
 
 install:
-	pip install -r backend/requirements.txt
+	$(PIP) install -r $(BACKEND_DIR)/requirements.txt
 
-# --------------------------------------------------
-# Train ML model (offline)
-# --------------------------------------------------
-
-train:
-	python backend/app/ml/train.py
-
-# --------------------------------------------------
-# Run backend server
-# --------------------------------------------------
+# -------------------------------
+# Development
+# -------------------------------
 
 run:
-	cd backend && uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+	cd $(BACKEND_DIR) && uvicorn $(APP_MODULE) --reload
 
-# --------------------------------------------------
-# Cleanup artifacts
-# --------------------------------------------------
+run-prod:
+	cd $(BACKEND_DIR) && uvicorn $(APP_MODULE) --host 0.0.0.0 --port 8000
+
+# -------------------------------
+# ML Training
+# -------------------------------
+
+train:
+	cd $(BACKEND_DIR)/training && $(PYTHON) train_model.py
+
+# -------------------------------
+# Testing
+# -------------------------------
+
+e2e:
+	bash $(BACKEND_DIR)/scripts/e2e_test.sh
+
+# -------------------------------
+# Cleanup
+# -------------------------------
 
 clean:
-	rm -f backend/airvalue_rf_model.joblib
-	find . -name "*.pyc" -delete
 	find . -type d -name "__pycache__" -exec rm -rf {} +
+	find . -type f -name "*.pyc" -delete
+
+# -------------------------------
+# Help
+# -------------------------------
+
+help:
+	@echo "Available commands:"
+	@echo "  make install     Install dependencies"
+	@echo "  make run         Run backend (dev mode)"
+	@echo "  make run-prod    Run backend (prod mode)"
+	@echo "  make train       Train ML model"
+	@echo "  make e2e         Run end-to-end tests"
+	@echo "  make clean       Cleanup cache files"

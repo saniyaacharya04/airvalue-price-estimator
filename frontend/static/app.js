@@ -50,17 +50,42 @@ async function signup() {
     res.ok ? "Account created. Please login." : (data.detail || "Signup failed");
 }
 
+/* ---------------- FEATURE NORMALIZATION ---------------- */
+
+/*
+Backend ML model expects:
+- bedrooms
+- bathrooms
+- location_score (1–10)
+- amenities_score (1–10)
+*/
+
+function computeLocationScore(zipcode) {
+  // Simple heuristic for demo purposes
+  const z = Number(zipcode);
+  if (z >= 10000 && z <= 19999) return 8;
+  if (z >= 20000 && z <= 39999) return 6;
+  return 5;
+}
+
+function computeAmenitiesScore() {
+  let score = 5;
+  if (document.getElementById("wifi").checked) score += 2;
+  if (document.getElementById("ac").checked) score += 2;
+  if (document.getElementById("entire").checked) score += 1;
+  return Math.min(score, 10);
+}
+
 /* ---------------- PREDICT ---------------- */
 
-async function predictPrice(save = false) {
+async function predictPrice() {
   const features = {
     bedrooms: Number(document.getElementById("bedrooms").value),
     bathrooms: Number(document.getElementById("bathrooms").value),
-    area: Number(document.getElementById("area").value),
-    zipcode_feat: Number(document.getElementById("zipcode").value),
-    has_wifi: document.getElementById("wifi").checked ? 1 : 0,
-    has_ac: document.getElementById("ac").checked ? 1 : 0,
-    is_entire_place: document.getElementById("entire").checked ? 1 : 0
+    location_score: computeLocationScore(
+      document.getElementById("zipcode").value
+    ),
+    amenities_score: computeAmenitiesScore()
   };
 
   const res = await fetch(`${API_BASE}/predict`, {
@@ -73,6 +98,13 @@ async function predictPrice(save = false) {
   });
 
   const data = await res.json();
+
+  if (!res.ok) {
+    document.getElementById("predictResult").innerText =
+      data.detail || "Prediction failed";
+    return;
+  }
+
   document.getElementById("predictResult").innerText =
     `Predicted Price: ₹${data.predicted_price}`;
 }
@@ -90,12 +122,13 @@ async function loadHistory() {
 
   data.forEach(p => {
     const li = document.createElement("li");
-    li.innerText = `₹${p.predicted_price} — ${new Date(p.created_at).toLocaleString()}`;
+    li.innerText =
+      `₹${p.predicted_price} — ${new Date(p.created_at).toLocaleString()}`;
     list.appendChild(li);
   });
 }
 
-/* ---------------- DASHBOARD ---------------- */
+/* ---------------- INIT ---------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("logoutBtn")) {
@@ -108,9 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("signupBtn").onclick = signup;
   }
   if (document.getElementById("predictBtn")) {
-    document.getElementById("predictBtn").onclick = () => predictPrice(false);
-  }
-  if (document.getElementById("saveBtn")) {
-    document.getElementById("saveBtn").onclick = () => predictPrice(true);
+    document.getElementById("predictBtn").onclick = predictPrice;
   }
 });

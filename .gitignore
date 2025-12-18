@@ -1,14 +1,65 @@
+# ================================
 # Python
+# ================================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
 
-# Environment
+# ================================
+# Virtual Environments
+# ================================
+env/
+venv/
+.venv/
+conda-env/
+*.conda
+
+# ================================
+# Environment files
+# ================================
 .env
 .env.*
 
-# OS
-.DS_Store
+# ================================
+# ML Artifacts & Data (CRITICAL)
+# ================================
+backend/data/
+backend/artifacts/
+*.joblib
+*.pkl
 
-# ML artifacts
-backend/airvalue_rf_model.joblib
-backend/airvalue.db
+# ================================
+# Databases
+# ================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ================================
+# Logs
+# ================================
+logs/
+*.log
+
+# ================================
+# OS / Editor
+# ================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ================================
+# Frontend build (if added later)
+# ================================
+dist/
+build/
+
+# ================================
+# Temporary files
+# ================================
+*.tmp
+*.swp
